@@ -2,13 +2,10 @@ require("dotenv").config()
 
 const fs = require("fs")
 const { ethers, getNamedAccounts } = require("hardhat")
-const { BigNumber } = require("ethers")
-const Web3 = require("web3")
 
 const GOERLI_URL = process.env.GOERLI_URL
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 
-const web3 = new Web3()
 const fsPromises = fs.promises
 const ABI_FILE_PATH = "artifacts/contracts/CoinFlip.sol/CoinFlip.json"
 const deployedContract = "0x6CC5b164aacF698F0b8b781f6aEB440C5E1e5f9a"
