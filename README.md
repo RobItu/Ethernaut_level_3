@@ -1,6 +1,6 @@
 # Ethernaut Level 3
 
-Code that I used to pass the Coin Flip security puzzle from OpenZeppelin's Ethernaut challenge. Using hardhat, I created a script that would determine the same block hash that the target smart contract used to determine it's randomness. With this knowledge, I correctly guessed 10 times in a row the outcome of flipping the coin flip. Learned how to interact with a deployed contract. 
+Code that I used to pass the Coin Flip security puzzle from OpenZeppelin's Ethernaut challenge. Using hardhat, I created a script that would determine the same block hash that the target smart contract used to determine it's randomness. With this knowledge, I correctly guessed 10 times in a row the outcome of flipping the coin. Learned how to interact with a deployed contract. 
 
 ## To replicate
 
